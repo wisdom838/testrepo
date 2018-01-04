@@ -1,0 +1,125 @@
+<div class="content-wrapper">
+	<!-- Content Header (Page header) -->
+	<section class="content-header">
+		<h1>User 
+        <small>Details</small>
+      </h1>
+
+		<ol class="breadcrumb">
+			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a>
+			</li>
+			<li class="active">Dashboard</li>
+		</ol>
+	</section>
+	<!-- Main content -->
+	<form class="form-horizontal"   #frm="ngForm"  (ngSubmit)="onSubmit(frm.value)">
+	<section class="content">
+		<!-- Main row -->
+		<div class="row">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				
+					<div class="box box-info">
+						<div class="box-header with-border">
+							<div class="col-lg-6 col-md-7 col-lg-offset-2 col-md-offset-1">
+							<div class="form-group">
+									<label class="col-lg-4 col-md-6 col-sm-5 col-xs-12 control-label">Food Chart</label>
+								      <div class="col-lg-7 col-md-5 col-sm-4 col-xs-12">
+									<input class="form-control" name="foundation_chart_id" placeholder="name" type="text" [(ngModel)]="Foodchart" *ngIf="foodbox" >
+									<select class="form-control" name="foundation_chart_id" *ngIf="!foodbox" [(ngModel)]="Foodchart">
+								      <option value="" selected>Select chart </option>
+								      <option *ngFor="let recmenu of returnJsonMenu" value="{{recmenu.menu_categoryid}}">{{recmenu.menu_categoryname}} </option>
+								      </select>
+						
+								</div>
+								<label class="col-lg-1 col-md-1 col-sm-1 col-xs-12 control-label"><a (click)="foodchart();" style="float: left">Select</a></label>
+							</div>
+							<div class="form-group">
+								<label class="col-lg-4 col-md-6 col-sm-5 col-xs-12 control-label">Menu</label>
+
+								<div class="col-lg-7 col-md-5 col-sm-4 col-xs-12">
+									<select class="form-control" name="menu_categoryid" [(ngModel)]="MenuCat">
+										<option value="" selected>Select Menu </option>
+										<option *ngFor="let recmenu of returnJsonMenu" value="{{recmenu.menu_categoryid}}">{{recmenu.menu_categoryname}} </option>
+										
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-lg-4 col-md-6 col-sm-5 col-xs-12 control-label">Sub Menu</label>
+
+								<div class="col-lg-7 col-md-5 col-sm-4 col-xs-12">
+							<select class="form-control" name="menu_sub_categorid" [(ngModel)]="SubMenuCat">
+									<option value="" selected>Select Sub Menu </option>
+							  <option *ngFor="let recsubmenu of returnJsonSubMenu" value="{{recsubmenu.menu_sub_categoryid}}">{{recsubmenu.menu_sub_categoryname}}</option>
+	
+						     </select>
+								</div>
+							</div>
+							</div>
+
+						</div>
+					</div>
+				
+			</div>
+			<!-- ./col -->
+
+		</div>
+		<!-- Main row -->
+		<div class="row">
+			<!-- Left col -->
+			<section class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+				<div class="box box-info">
+					<div class="box-header with-border">
+		<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12 p-l-0 col-md-offset-1">
+		<div class="evn-color " >
+	        <div class="form-group m-l-0 m-r-0" style="min-height:300px;">
+											<!-- <div class="form-check" *ngFor="let i of Arr(num).fill(1)"> -->
+	<label class="form-check-label normal-txt" *ngFor="let recitem of returnJsonitem ;let i=index;">
+	<!-- <input class="form-check-input" name="item_id[{{i}}]"  type="checkbox"  [value]="recitem.item_id"  (change)="search(category, $event)" ngModel > {{recitem.item_name}}  -->
+	<input type="checkbox"   id="checkbox_item_{{i}}"  (change)="additem(recitem, $event)" />  {{recitem?.item_name}}
+    
+</label>
+	<!-- </div> -->
+	  </div>
+	 </div>
+	 <b>selectedItems</b>: {{selectedItems | json}}
+	</div>
+ 
+	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-t-10 p-t-10 text-center">
+	 <button class="btn btn-save">Save</button>
+	  <button type="button" class="btn btn-default">Cancel</button>
+									
+	  </div>
+	<div class="clearfix"></div>
+							
+					</div>
+				</div>
+			</section>
+			<!-- /.Left col -->
+
+		</div>
+		<!-- /.row (main row) -->
+
+	</section>
+</form>
+	<!-- /.content -->
+</div>
+<!-- Bacon Details Model Starts Here -->
+<div class="modal fade" id="Bacon" role="dialog">
+	<!-- Modal Content Starts Here -->
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header ">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title blue-title-color">Bacon Details</h4>
+			</div>
+			<div class="modal-body">
+				<p class="breakfast">Bacon Nutritaion Details Content Here</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+	<!-- Modal Content Ends Here -->
+</div>
