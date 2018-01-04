@@ -16,7 +16,7 @@ export class FoodchartComponent implements OnInit {
   SubMenuCat="";
   Items:any;
   dataarry:any=[];
-
+ responseData : any;
   returnJsonMenu:any=[];
   returnJsonSubMenu:any=[];
   returnJsonitem :any;
@@ -43,6 +43,8 @@ export class FoodchartComponent implements OnInit {
     //console.log(this.returnJsonitem);
     console.log(data);
     //console.log(this.frm);
+    this.dataarry.push(data);
+    this.responseData.key = this.dataarry;
   }
 
   additem(recitem, event) {
