@@ -1,0 +1,153 @@
+<!-- Content ID Div Starts Here  This Div close in footer.php -->
+
+<div id="page-wrapper" style="min-height: 341px;">
+<div class="container-fluid">
+	<div class="row">
+        <div class="col-sm-12">
+          <div class="white-box">
+          	<div class="box-title box-title-h3"><h3><i class="fa fa-angle-right"></i> ECG Billing Report</h3></div>
+
+          	<div class="row">
+          		<div class="col-lg-6 col-lg-offset-6"><p class="pull-right mandatory"><b>*</b> Fields are mandatory</p></div>
+          	</div>
+          	<div class="clearfix">
+          	<div class="col-sm-12">
+              <form (ngSubmit)="onSubmit(form.value)" class="form-horizontal" #frm="ngForm">
+              	<div class="col-md-4">
+                <div class="form-group-sm">
+                  <label class="control-label col-md-3 float-right nopadding" for="daterange">*&nbsp;Date&nbsp;Range</label>
+                  <div class="col-md-9 nopadright">
+                    <my-date-range-picker id="daterange" name="mydaterange" [options]="myDateRangePickerOptions"
+                    ngModel required></my-date-range-picker>
+                  </div>
+                </div>
+                </div>
+            <div class="col-md-8 nopadding">
+                <div class="col-md-3 nopadding">
+                <div class="form-group-sm">
+                  <label class="col-md-3 control-label nopadding" for="stat">Status</label>
+                  <div class="col-md-9 nopadright">
+                  <select class="form-control input-sm" id="stat" name="status" [(ngModel)]="statusVal">
+					    	<option *ngFor="let statusopt of statusArr" [value]="statusopt.column_value">{{statusopt.column_name}}</option>
+					</select>
+                  </div>
+                </div>
+                </div>
+
+                <div class="col-md-3">
+                <div class="form-group-sm">
+                  <label class="col-md-4 control-label nopadding" for="provider">Provider</label>
+                  <div class="col-md-8 nopadright">
+                  <select class="form-control input-sm" id="provider" name="doc_provider" [(ngModel)]="prodVal">
+                  		<option value="1">All</option>
+					    <option *ngFor="let rec of providersArr" [value]="rec.providerno">{{rec.providerno}}</option>
+					</select>
+                  </div>
+                </div>
+                </div>
+
+                <div class="col-md-4">
+                <div class="form-group-sm">
+                  <label class="col-md-4 control-label nopadding" for="clmtype">Claim Raise</label>
+                  <div class="col-md-8">
+                  <select class="form-control input-sm" id="clmtype" name="claim_type" [(ngModel)]="claimVal">
+					    	<option *ngFor="let rec of claimTypeArr" [value]="rec.column_value">{{rec.column_name}}</option>
+					</select>
+                  </div>
+                </div>
+                </div>
+
+                <div class="col-md-2">
+                    <button type="submit" class={{buttonClass}} [disabled]="!frm.valid">{{buttonString}}</button>
+                </div>
+            </div>
+				   </form>
+				   </div>
+          </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="row">
+    	<div class="col-sm-12">
+    	<div class="white-box">
+    	<div class="box-title box-title-h3"><h3><i class="fa fa-angle-right"></i> ECG Billing Report</h3></div>
+    	<div class="table-responsive">
+    	<table class="table table-bordered table-striped td-mc">
+              <thead>
+                <tr>
+	                <th rowspan="2">S No</th>
+	                <th colspan="5">ECG Details</th>
+	                <th rowspan="2">Provider</th>
+	                <th colspan="5">Claim Details</th>
+	                <th colspan="2" valign="middle">Paid Details</th>
+	                <th rowspan="2">Credited On</th>
+	                <th rowspan="2">Claim Status</th>
+                </tr>
+                <tr>
+                	<th>Patient Name</th>
+                	<th>Id</th>
+                	<th>Ecg Name</th>
+                	<th>Ecg Date</th>
+                	<th>Reported On</th>
+                	<th>Id</th>
+                	<th>Claim Type</th>
+                	<th>Raise Type</th>
+                	<th>Date</th>
+                	<th>Amount</th>
+                	<th>Paid Date</th>
+                	<th>Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+              <tr *ngIf="resultSet.length==0">
+              	<td colspan="16">No Records Found</td>
+              </tr>
+              <tr *ngFor="let rec of resultSet;let i = index">
+                <td>{{(i+1)+stratCount}}</td>
+                  <td>{{rec.pat_name}}</td>
+                  <td>{{rec.ecgid}}</td>
+                  <td>{{rec.ecgname}}</td>
+                  <td>{{rec.ecg_date_time}}</td>
+                  <td>{{rec.reporttime}}</td>
+                  <td>{{rec.servicingprovidernum}}</td>
+                  <td>{{rec.claim_id}}</td>
+                  <td>{{rec.claim_category}}</td>
+                  <td>{{rec.raise_type}}</td>
+                  <td>{{rec.raised_date }}</td>
+                  <td>{{rec.raised_amount }}</td>
+                  <td>{{rec.paymentrundate}}</td>
+                  <td>{{rec.sanction_amount}}</td>
+                  <td>{{rec.paymentrundate}}</td>
+                  <td>{{rec.claim_status}}</td>
+              </tr>
+              </tbody>
+            </table>
+            </div>
+            <!-- Pagination Starts-->
+              <div class="row clearfix" *ngIf="resultSet.length!=0">
+              <div class="col-md-6">
+                <pagination [totalItems]="rowCount" [(ngModel)]="currentPage" [maxSize]="maxSize" class="pagination-sm"
+                            [boundaryLinks]="true" [rotate]="false" (numPages)="numPages = $event" (pageChanged)="pageChanged($event)" [itemsPerPage]="numRowsPage"></pagination>
+              </div>
+              <div class="col-md-3 col-md-offset-3">
+                <div class="form-group-sm pageLimitDiv">
+                  <!-- <div> -->
+                    <label for='pageLimit' class="col-md-6 nopadding control-label">Page Limit:</label>
+                  <!-- </div> -->
+                  <div class="col-md-6">
+                      <select class="form-control" name="pagelimit" id="pageLimit" [(ngModel)]="numRowsPage" (change)="changePageLimit()">
+                        <option *ngFor="let rec of pagingLimit" [value]="rec">{{rec}}</option>
+                      </select>
+                  </div>
+                </div>
+              </div>
+              </div>
+              <!-- <pre class="card card-block card-header">Page: {{currentPage}} / {{numPages}}</pre> -->
+              <!-- Pagination Ends -->
+        </div>
+    </div>
+    </div>
+</div>
+<app-footer></app-footer>
+</div>
