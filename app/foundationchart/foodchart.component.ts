@@ -45,6 +45,12 @@ export class FoodchartComponent implements OnInit {
     //console.log(this.frm);
     this.dataarry.push(data);
     this.responseData.key = this.dataarry;
+    responseData :{
+        key:[
+            
+        ]
+    }
+
   }
 
   additem(recitem, event) {
